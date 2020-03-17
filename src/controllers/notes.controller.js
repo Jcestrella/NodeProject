@@ -2,6 +2,31 @@ const notesCtrl = {};
 const Note = require('../models/Note');
 const { unlink } = require('fs-extra');
 const path = require('path');
+const faker = require('faker');
+
+const comparar = (valor) =>{
+    if(valor == 1){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+const pages = (valor, pages) =>{
+    let variable;
+    if (valor > 5){
+        variable = valor - 4;
+    }else{
+        variable = 1;
+    }
+    for(variable; variable <= valor + 4 && variable <= pages; i++){
+        if(variable == valor){
+            return variable;
+        }else{
+            return variable;
+        }
+    }
+}
 
 notesCtrl.renderNoteForm = (req, res) => {
     res.render('notes/new-note')
@@ -44,5 +69,42 @@ notesCtrl.deleteNote = async (req, res) => {
     req.flash('success_msg', 'Note Deleted Successfully');
     res.redirect('/notes');
 };
+
+notesCtrl.addFakeNote = (req, res) => {
+    for(let i =0; i < 90; i++){
+        const fakeNote = new Note();
+        fakeNote.title = faker.name.title();
+        fakeNote.description = faker.lorem.text(5);
+        fakeNote.image = faker.image.image();
+        fakeNote.user = '5e5f688ef6199d278c86454d';
+        fakeNote.save();
+    }
+    res.redirect('/users/signin');
+}
+
+notesCtrl.pagination = (req, res, next) => {
+    let perPage = 9;
+    let page = req.params.page || 1;
+
+    Note
+        .find({})
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec((err, notes) => {
+            Note.count((err, count) => {
+                if(err){
+                    return next(err)
+                }else {
+                    res.render('notes/pages', {
+                        notes,
+                        current: page,
+                        pages: Math.ceil(count / perPage),
+                        condition: comparar(page),
+                        conditionLast: comparar(Math.ceil(count/perPage))
+                    });
+                }
+            });
+        })
+}
 
 module.exports = notesCtrl;

@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row p-5">
+        {{#each notes}}
+        <div class="col-md-4">
+            <div class="p-4">
+                <div class="card">
+                    <div class="card-body">
+                <h4 class="card-title d-flex justify-content-between align-items-center">
+                    {{title}} <a href="/notes/edit/{{_id}}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </h4>
+                <p>{{description}}</p>
+                    <img src="{{image}}" class="card-img-top">
+                <form action="/notes/delete/{{_id}}?_method=DELETE" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger btn-block btn-sm">
+                        delete
+                    </button>
+                </form>
+            </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <div class="row">
+        {{#if pages}}
+        <div class="nav mx-auto">
+            <ul class="pagination">
+                {{#if condition}}
+                <li class="page-item disabled">
+                    <a href="" class="page-link">First page</a>
+                </li>
+                {{else}}
+                <li class="page-item">
+                    <a href="/notes/1" class="page-link">First page</a>
+                </li>
+                {{/if}}
+
+                {{#if conditionLast}}
+                <li class="page-item disabled">
+                    <a href="" class="page-link">Last page</a>
+                </li>
+                {{else}}
+                <li class="page-item">
+                    <a href="/notes/{{pages}}" class="page-link">Last page</a>
+                </li>
+                {{/if}}
+            </ul>
+        </div>
+        {{/if}}
+
+        
+    </div>
+</div>
