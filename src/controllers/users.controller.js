@@ -48,6 +48,23 @@ usersCtrl.signin = passport.authenticate('local', {
     failureFlash: true
 });
 
+usersCtrl.renderProfile = async (req, res) => {
+    const user = await User.findById(req.user.id);
+    res.render('users/profile', {user});
+}
+
+usersCtrl.renderEditForm = async (req, res) => {
+    const user = await User.findById(req.user.id);
+    res.render('users/edit-profile', {user});
+}
+
+usersCtrl.updateUser = async(req, res) => {
+    const {name, email} = req.body;
+    await User.findByIdAndUpdate(req.user.id, {name, email})
+    req.flash('success_msg', 'Profile Updated Successfully');
+    res.redirect('/users/profile'); 
+}
+
 usersCtrl.logout = (req, res) => {
     req.logout();
     req.flash('success_msg', 'You are logged out');

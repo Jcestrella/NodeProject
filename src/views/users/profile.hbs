@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-md-4 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                Profile
+            </div>
+            <div class="card-body">
+                <form action="/users/edit/profile" method="GET">
+                    <div class="form-group">
+                        <dt>Name</dt>
+                        <dd>{{user.name}}</dd>
+                    </div>
+                    <div class="form-group">
+                        <dt>Email</dt>
+                        <dd>{{user.email}}</dd>
+                    </div>
+                    <button class="btn btn-success btn-block">
+                        Editar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
