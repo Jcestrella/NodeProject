@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const {NODE_PROJECT_HOST, NODE_PROJECT_DATABASE} = process.env
-const mongoUrl =  `mongodb://${NODE_PROJECT_HOST}/${NODE_PROJECT_DATABASE}`;
+const mongoUrl =  `mongodb+srv://${NODE_PROJECT_HOST}/${NODE_PROJECT_DATABASE}`;
 
 mongoose.connect(mongoUrl, {
     useUnifiedTopology: true,
